@@ -6,6 +6,8 @@
 #include <string>
 #include <complex>
 #include <Eigen/Dense>
+using Eigen::MatrixXd;
+using Eigen::VectorXd;
 
 class Component {
 protected:
@@ -63,16 +65,19 @@ private:
     std::vector<std::shared_ptr<Node>> nodes;
     std::vector<Connection> connections;
 
-    std::vector<std::vector<std::complex<double>>> incidence_matrix;
-    std::vector<std::vector<std::complex<double>>> impedance_matrix;
+    MatrixXd incidence_matrix;
+    MatrixXd impedance_matrix;
 
+    VectorXd voltage_vector;
+    VectorXd current_vector;
 public:
     BreadBoard();
     ~BreadBoard();
     void add_node(std::shared_ptr<Node> node);
     void add_component(std::shared_ptr<Component> component, std::shared_ptr<Node> node1, std::shared_ptr<Node> node2);
 
-
+    void build_incidence_matrix();
+    void build_impedance_matrix();
 };
 
 #endif // COMPONENT_H
